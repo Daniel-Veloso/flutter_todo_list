@@ -3,12 +3,20 @@ import '../models/todo_model.dart';
 
 class ToDoRepository{
 
-  final Dio dio = Dio();
+  Dio? dio;
   final url = 'https://jsonplaceholder.typicode.com/todos';
+
+  ToDoRepository([Dio? client]){
+    if(client == null){
+      this.dio = Dio();
+    } else {
+      this.dio = client;
+    }
+  }
 
   Future fetchToDos() async{
     
-    final response = await dio.get(url);
+    final response = await dio!.get(url);
     final list = response.data as List;
 
     List<ToDoModel> toDos = [];
@@ -21,5 +29,5 @@ class ToDoRepository{
     return toDos;
     
   }
-  
+
 }
