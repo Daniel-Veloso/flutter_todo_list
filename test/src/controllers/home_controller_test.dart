@@ -15,9 +15,9 @@ main(){
 
     when(() => repository.fetchToDos()).thenAnswer((_) async => [ToDoModel()]);
 
-    expect(controller.state, HomeState.start);
+    expect(controller.state.value, HomeState.start);
     await controller.start();
-    expect(controller.state, HomeState.sucess);
+    expect(controller.state.value, HomeState.sucess);
     expect(controller.toDos.isNotEmpty, true);
   });
 
@@ -25,9 +25,9 @@ main(){
 
     when(() => repository.fetchToDos()).thenThrow(Exception());
 
-    expect(controller.state, HomeState.start);
+    expect(controller.state.value, HomeState.start);
     await controller.start();
-    expect(controller.state, HomeState.error);
+    expect(controller.state.value, HomeState.error);
   });
 
 }
