@@ -15,7 +15,19 @@ main(){
 
     when(() => repository.fetchToDos()).thenAnswer((_) async => [ToDoModel()]);
 
+    expect(controller.state, HomeState.start);
     await controller.start();
+    expect(controller.state, HomeState.sucess);
     expect(controller.toDos.isNotEmpty, true);
   });
+
+  test("must change the state to error if the request fails", () async{
+
+    when(() => repository.fetchToDos()).thenThrow(Exception());
+
+    expect(controller.state, HomeState.start);
+    await controller.start();
+    expect(controller.state, HomeState.error);
+  });
+
 }
